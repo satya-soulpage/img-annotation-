@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex" />
+  <link rel="shortcut icon" href="https://soulpageit.com/wp-content/uploads/2018/07/soulpage_favicon-1.png" type="image/x-icon">
+  <link rel="icon" href="https://soulpageit.com/wp-content/uploads/2018/07/soulpage_favicon-1.png" type="image/x-icon">
+  <title>SoulPage - Image Annotation Interface</title>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    .card {
+      width: 1100px;
+      max-width: 100%;
+      background: #fff;
+      box-shadow: 1px 1px 5px #ddd;
+      border: 1px solid #ddd;
+      padding: 25px;
+      margin: 40px auto 0 auto;
+    }
+    body {
+      background: #f6f6f6;
+      font-family: 'PT Mono', monospace;
+    }
+    * {
+      padding: 0;
+      margin: 0;
+      outline: 0;
+      box-sizing: border-box;
+    }
+  </style>
+  <script>
+    window.console = window.console || function (t) {};
+  </script>
+  <script>
+    if (document.location.search.match(/type=embed/gi)) {
+      window.parent.postMessage("resize", "*");
+    }
+  </script>
+</head>
+
+<body translate="no">
+  <div class="container pt-3 pb-3">
+  <center><h1>SoulPage - Image Annotation Interface</h1></center>
+    <div class="row pt-3">
+      
+      <div class="col-md-8">
+        <h1>Labelling</h1>
+        <div class="card" id="card"></div>
+      </div>
+
+      <div class="col-md-4">
+        <h1>Settings</h1>
+        <div class="form-group">
+          <label>Enter Image URL</label>
+          <input type="text" id="image-url" class="form-control" />
+        </div>
+        
+        <div class="form-group">
+          <button class="btn btn-primary btn-sm" onclick="handleImageUpload()">Upload Image</button>
+        </div>
+        
+        <div class="form-group">
+          <label>Enter Labels</label>
+          <div class="flex-container"></div>
+          <input type="text" id="select-option" class="form-control" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+ 
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+  ></script>
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+  ></script>
+  <script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+  ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
+  <script id="rendered-js">
+    "use strict";
+    var _createClass = (function () {
+      function c(d, e) {
+        for (var g, f = 0; f < e.length; f++)
+          (g = e[f]),
+        (g.enumerable = g.enumerable || !1),
+        (g.configurable = !0),
+        "value" in g && (g.writable = !0),
+        Object.defineProperty(d, g.key, g);
+      }
+      return function (d, e, f) {
+        return e && c(d.prototype, e), f && c(d, f), d;
+      };
+    })();
+
+    function _defineProperty(c, d, e) {
+      return (
+        d in c
+        ? Object.defineProperty(c, d, {
+          value: e,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0,
+        })
+        : (c[d] = e),
+        c
+        );
+    }
+
+    function _toConsumableArray(c) {
+      if (Array.isArray(c)) {
+        for (var d = 0, e = Array(c.length); d < c.length; d++) e[d] = c[d];
+          return e;
+      }
+      return Array.from(c);
+    }
+
+    function _classCallCheck(c, d) {
+      if (!(c instanceof d))
+        throw new TypeError("Cannot call a class as a function");
+    }
+
+    function _possibleConstructorReturn(c, d) {
+      if (!c)
+        throw new ReferenceError(
+          "this hasn't been initialised - super() hasn't been called"
+          );
+      return d && ("object" == typeof d || "function" == typeof d) ? d : c;
+    }
+
+    function _inherits(c, d) {
+      if ("function" != typeof d && null !== d)
+        throw new TypeError(
+          "Super expression must either be null or a function, not " +
+          typeof d
+          );
+      (c.prototype = Object.create(d && d.prototype, {
+        constructor: {
+          value: c,
+          enumerable: !1,
+          writable: !0,
+          configurable: !0,
+        },
+      })),
+      d &&
+      (Object.setPrototypeOf
+        ? Object.setPrototypeOf(c, d)
+        : (c.__proto__ = d));
+    }
+    var IMAGE = {
+      colors: ["cyan", "magenta", "greenyellow", "tomato", "deepskyblue"],
+      activeColor: "yellow",
+      width: 1e3,
+      height: 648,
+      url:
+      "https://images.unsplash.com/photo-1485988412941-77a35537dae4?fit=crop&w=1000&q=50",
+    },
+    Component = (function (c) {
+      function d(e) {
+        _classCallCheck(this, d);
+        var f = _possibleConstructorReturn(
+          this,
+          (d.__proto__ || Object.getPrototypeOf(d)).call(this, e)
+          );
+        return (
+          (f.getSVGPoint = function (g, h) {
+            var j = f.refs.svg.createSVGPoint();
+            return (
+              (j.x = g),
+              (j.y = h),
+              j.matrixTransform(f.refs.svg.getScreenCTM().inverse())
+              );
+          }),
+          (f.getColor = function (g) {
+            return f.props.colors[
+            g -
+            Math.floor(g / f.props.colors.length) *
+            f.props.colors.length
+            ];
+          }),
+          (f.roundPx = function (g) {
+            return Math.round(10 * g) / 10;
+          }),
+          (f.getRect = function (g, h) {
+            return [
+            {
+              x: g.x,
+              y: g.y,
+            },
+            {
+              x: g.x,
+              y: h.y,
+            },
+            {
+              x: h.x,
+              y: h.y,
+            },
+            {
+              x: h.x,
+              y: g.y,
+            },
+            ];
+          }),
+          (f.updateShape = function (g, h) {
+            "polygon" == f.state.mode
+            ? f.setState(function (j) {
+              return {
+                current: [].concat(_toConsumableArray(j.current), [
+                {
+                  x: g,
+                  y: h,
+                },
+                ]),
+              };
+            })
+            : f.setState(
+              function (j) {
+                return {
+                  current: j.current.length
+                  ? f.getRect(j.current[0], {
+                    x: g,
+                    y: h,
+                  })
+                  : [
+                  {
+                    x: g,
+                    y: h,
+                  },
+                  ],
+                };
+              },
+              function () {
+                1 < f.state.current.length && f.handleClose();
+              }
+              );
+          }),
+          (f.getPath = function () {
+            if ("polygon" == f.state.mode)
+              return (
+                "M" +
+                f.state.current
+                .map(function (_ref) {
+                  var h = _ref.x,
+                  j = _ref.y;
+                  return h + "," + j;
+                })
+                .join(" ") +
+                " " +
+                (f.state.x && f.state.y ? f.state.x + "," + f.state.y : "")
+                );
+            var g = f.getRect(f.state.current[0], {
+              x: f.state.x,
+              y: f.state.y,
+            });
+            return (
+              "M" +
+              g
+              .map(function (_ref2) {
+                var h = _ref2.x,
+                j = _ref2.y;
+                return h + "," + j;
+              })
+              .join(" ") +
+              "z"
+              );
+          }),
+          (f.handleMouseMove = function (_ref3) {
+            var g = _ref3.clientX,
+            h = _ref3.clientY,
+            j = f.getSVGPoint(g, h);
+            f.setState({
+              x: j.x,
+              y: j.y,
+            });
+          }),
+          (f.handleClick = function (_ref4) {
+            var g = _ref4.clientX,
+            h = _ref4.clientY;
+            f.setState({
+              selected: null,
+              x: null,
+              y: null,
+              drawing: !0,
+            });
+            var j = f.getSVGPoint(g, h);
+            f.updateShape(f.roundPx(j.x), f.roundPx(j.y));
+          }),
+          (f.handleClose = function () {
+            f.setState(
+              function (j) {
+                return {
+                  current: [],
+                  spans: [].concat(_toConsumableArray(j.spans), [
+                  {
+                    label: j.label,
+                    path: j.current,
+                  },
+                  ]),
+                  x: null,
+                  y: null,
+                  drawing: !1,
+                };
+              },
+              function () {
+                return window.getSelection().removeAllRanges();
+              }
+              );
+          }),
+          (f.handleDelete = function () {
+            null != f.state.selected &&
+            f.setState(function (g) {
+              return {
+                spans: g.spans.filter(function (h, j) {
+                  return j != g.selected;
+                }),
+                selected: null,
+              };
+            });
+          }),
+          (f.handleLabelSelect = function (g) {
+            return f.setState({
+              label: g.target.value,
+            });
+          }),
+          (f.handleSelect = function (g) {
+            return f.setState({
+              selected: g,
+            });
+          }),
+          (f.state = {
+            current: [],
+            spans: [],
+            x: null,
+            y: null,
+            selected: null,
+            mode: "rect",
+            drawing: !1,
+            label: "HUMAN",
+          }),
+          f
+          );
+}
+return (
+  _inherits(d, c),
+  _createClass(d, [
+  {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var e = this;
+      window.addEventListener("keydown", function (_ref5) {
+        var f = _ref5.keyCode;
+        27 == f &&
+        e.setState({
+          current: [],
+        });
+      });
+    },
+  },
+  {
+    key: "render",
+    value: function render() {
+      var e = this;
+      return React.createElement(
+        "div",
+        {
+          ref: "container",
+        },
+        React.createElement(Toolbar, {
+          setMode: function setMode(f) {
+            return e.setState({
+              mode: f,
+            });
+          },
+          handleSelect: this.handleLabelSelect,
+          handleDelete: this.handleDelete,
+          currentMode: this.state.mode,
+          modes: ["rect", "polygon"],
+          labels: [],
+          currentLabel: this.state.label,
+        }),
+        React.createElement(
+          "svg",
+          {
+            ref: "svg",
+            width: this.props.width,
+            height: this.props.height,
+            viewBox:
+            "0 0 " + this.props.width + " " + this.props.height,
+            preserveAspectRatio: "xMinYMin meet",
+            onMouseMove: this.state.current.length
+            ? this.handleMouseMove
+            : null,
+            style: {
+              maxWidth: "100%",
+              height: "auto",
+              background: "black",
+            },
+          },
+          React.createElement("image", {
+            xlinkHref: this.props.url,
+            width: this.props.width,
+            height: this.props.height,
+            onClick: this.handleClick,
+            style: {
+              cursor: "crosshair",
+              opacity: 0.9,
+            },
+          }),
+          this.state.spans.map(function (_ref6, h) {
+            var f = _ref6.path,
+            g = _ref6.label,
+            j = h == e.state.selected,
+            k = j ? e.props.activeColor : e.getColor(h),
+            l = j ? 0.75 : 0.25,
+            m = e.state.current.length ? "default" : "pointer",
+            n = f
+            .concat()
+            .sort(function (o, p) {
+              return o.x > p.x;
+            })
+            .sort(function (o, p) {
+              return o.y > p.y;
+            })[0];
+            return React.createElement(
+              "g",
+              {
+                key: h,
+              },
+              React.createElement("path", {
+                stroke: k,
+                fill: k,
+                fillOpacity: l,
+                strokeWidth: "7",
+                d:
+                "M" +
+                f.map(function (_ref7) {
+                  var o = _ref7.x,
+                  p = _ref7.y;
+                  return o + "," + p;
+                }) +
+                "z",
+                style: {
+                  cursor: m,
+                },
+                onClick: e.state.drawing
+                ? null
+                : function () {
+                  return e.handleSelect(h);
+                },
+              }),
+              React.createElement(
+                "defs",
+                null,
+                React.createElement(
+                  "filter",
+                  {
+                    id: "bg-" + h,
+                    x: 0,
+                    y: 0,
+                    width: 1,
+                    height: 1,
+                  },
+                  React.createElement("feFlood", {
+                    floodColor: k,
+                  }),
+                  React.createElement("feComposite", {
+                    in: "SourceGraphic",
+                  })
+                  )
+                ),
+              React.createElement(
+                "text",
+                {
+                  filter: "url(#bg-" + h + ")",
+                  x: n.x,
+                  y: n.y,
+                  style: {
+                    fontSize: "26px",
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                  },
+                },
+                "\xA0",
+                g,
+                "\xA0"
+                )
+              );
+          }),
+          this.state.current.length &&
+          React.createElement("path", {
+            stroke: this.props.activeColor,
+            fill: "none",
+            fillOpacity: "0.5",
+            strokeWidth: "5",
+            onClick: this.handleClick,
+            d: this.getPath(),
+          }),
+          "polygon" == this.state.mode &&
+          this.state.current.map(function (_ref8, h) {
+            var f = _ref8.x,
+            g = _ref8.y;
+            return React.createElement("circle", {
+              key: h,
+              cx: f,
+              cy: g,
+              r: 10,
+              fill: e.props.activeColor,
+              onClick: function onClick() {
+                return e.handleClose(f, g);
+              },
+              style: {
+                cursor: "pointer",
+              },
+              stroke: "transparent",
+              strokeWidth: "30",
+            });
+          })
+          ),
+React.createElement(
+  "div",
+  {
+    style: {
+      marginTop: "1rem",
+      background: "#f6f6f6",
+      padding: "10px",
+      whiteSpace: "pre-wrap",
+      fontSize: "11px",
+      fontFamily: "monospace",
+    },
+  },
+  this.state.spans.map(function (_ref9, h) {
+    var f = _ref9.path,
+    g = _ref9.label;
+    return React.createElement(
+      "div",
+      {
+        style: {
+          marginBottom: "5px",
+        },
+      },
+      React.createElement(
+        "strong",
+        {
+          style: {
+            padding: "0 3px",
+            background: e.getColor(h),
+          },
+        },
+        g
+        ),
+      "\xA0",
+      f
+      .map(function (_ref10) {
+        var j = _ref10.x,
+        k = _ref10.y;
+        return "[" + j + ", " + k + "]";
+      })
+      .join(", ")
+      );
+  })
+  )
+);
+},
+},
+]),
+d
+);
+})(React.Component),
+Toolbar = (function (c) {
+  function d() {
+    return (
+      _classCallCheck(this, d),
+      _possibleConstructorReturn(
+        this,
+        (d.__proto__ || Object.getPrototypeOf(d)).apply(this, arguments)
+        )
+      );
+  }
+  return (
+    _inherits(d, c),
+    _createClass(d, [
+    {
+      key: "render",
+      value: function render() {
+        var f = this,
+        e = _defineProperty(
+        {
+          border: "none",
+          padding: "6px",
+          cursor: "pointer",
+          background: "transparent",
+          borderRadius: "4px",
+        },
+        "border",
+        "1px solid #ddd"
+        );
+        return React.createElement(
+          "div",
+          {
+            style: {
+              marginBottom: "1rem",
+            },
+          },
+          this.props.modes.map(function (g) {
+            return React.createElement(
+              "button",
+              {
+                key: g,
+                onClick: function onClick() {
+                  return f.props.setMode(g);
+                },
+                style: Object.assign({}, e, {
+                  marginRight: "1rem",
+                  background:
+                  f.props.currentMode == g
+                  ? "#ffe184"
+                  : "transparent",
+                }),
+              },
+              React.createElement(Icon, {
+                name: g,
+              })
+              );
+          }),
+          React.createElement(
+            "select",
+            {
+              onChange: this.props.handleSelect,
+            },
+            this.props.labels.map(function (g) {
+              return React.createElement(
+                "option",
+                {
+                  key: g,
+                  value: g,
+                },
+                g
+                );
+            })
+            ),
+          React.createElement(
+            "button",
+            {
+              style: Object.assign({}, e, {
+                float: "right",
+              }),
+              onClick: this.props.handleDelete,
+            },
+            React.createElement(Icon, {
+              name: "delete",
+            })
+            )
+          );
+      },
+    },
+    ]),
+    d
+    );
+})(React.Component),
+Icon = (function (c) {
+  function d() {
+    return (
+      _classCallCheck(this, d),
+      _possibleConstructorReturn(
+        this,
+        (d.__proto__ || Object.getPrototypeOf(d)).apply(this, arguments)
+        )
+      );
+  }
+  return (
+    _inherits(d, c),
+    _createClass(d, [
+    {
+      key: "render",
+      value: function render() {
+        var e = ICONS[this.props.name];
+        return React.createElement(
+          "svg",
+          {
+            style: {
+              verticalAlign: "middle",
+            },
+            width: 24,
+            height: 24,
+            viewBox: e.viewBox,
+          },
+          e.paths.map(function (f, g) {
+            return React.createElement("path", {
+              key: g,
+              d: f,
+            });
+          })
+          );
+      },
+    },
+    ]),
+    d
+    );
+})(React.Component),
+ICONS = {
+  rect: {
+    viewBox: "0 0 24 24",
+    paths: [
+    "M18.984 3c1.078 0 2.016 0.938 2.016 2.016v3.984h-2.016v-3.984h-3.984v-2.016h3.984zM18.984 18.984v-3.984h2.016v3.984c0 1.078-0.938 2.016-2.016 2.016h-3.984v-2.016h3.984zM5.016 15v3.984h3.984v2.016h-3.984c-1.078 0-2.016-0.938-2.016-2.016v-3.984h2.016zM3 5.016c0-1.078 0.938-2.016 2.016-2.016h3.984v2.016h-3.984v3.984h-2.016v-3.984z",
+    ],
+  },
+  polygon: {
+    viewBox: "0 0 1000 1000",
+    paths: [
+    "M841,510C837,510,832,511,827,511L760,240C795,221,820,184,820,141C820,80,770,30,709,30C650,30,602,76,598,135L360,182C342,147,305,123,263,123C201,123,151,173,151,234C151,281,180,321,220,337L165,736C106,738,58,787,58,847C58,908,108,958,169,958C230,958,279,909,280,849L750,684C770,713,803,732,841,732C903,732,952,682,952,621C952,560,903,510,841,510zM709,67C750,67,783,100,783,141C783,182,750,215,709,215C668,215,635,182,635,141C635,100,668,67,709,67zM189,234C189,194,222,161,263,161C303,161,336,194,336,234C336,275,303,308,263,308C222,308,189,275,189,234zM169,921C128,921,95,888,95,847C95,806,128,773,169,773C210,773,243,806,243,847C243,888,210,921,169,921zM730,621C730,631,731,640,734,648L274,810C262,778,236,752,204,742L259,345C260,345,261,346,263,346C324,346,374,296,374,234C374,229,373,224,372,219L603,173C617,219,659,252,709,252C713,252,718,252,722,251L790,523C755,541,730,578,730,621zM841,695C801,695,768,662,768,621C768,581,801,547,841,547C882,547,915,581,915,621C915,662,882,695,841,695z",
+    ],
+  },
+  delete: {
+    viewBox: "0 0 24 24",
+    paths: [
+    "M15.516 3.984h3.469v2.016h-13.969v-2.016h3.469l1.031-0.984h4.969zM8.438 11.859l2.156 2.156-2.109 2.109 1.406 1.406 2.109-2.109 2.109 2.109 1.406-1.406-2.109-2.109 2.109-2.156-1.406-1.406-2.109 2.156-2.109-2.156zM6 18.984v-12h12v12c0 1.078-0.938 2.016-2.016 2.016h-7.969c-1.078 0-2.016-0.938-2.016-2.016z",
+    ],
+  },
+};
+</script>
+<script type="text/javascript" src="scripts.js"></script>
+</body>
+</html>
