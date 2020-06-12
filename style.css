@@ -62,3 +62,35 @@
 .img-url{
   width: 80%;
 }
+
+/*  header */
+.navbar-header {
+  padding: 0;
+  background-color: #444248;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+  height: 95px;
+}
+.navbar-footer {
+  padding: 0;
+  background-color: #444248;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+  height: 50px;
+}
+.logo{
+  width: 32px;
+}
+.main-header{
+  color: white !important;
+  font-size: 30px;
+  margin-left: -50px;
+}
+.footer-bdy{
+  text-align: right;
+  /* margin-right: 36px; */
+  margin-left: 80%;
+  color: white;
+}

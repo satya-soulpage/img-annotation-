@@ -14,7 +14,7 @@ function handleImageUpload() {
 
 let selectInput = document.getElementById("select-option");
 
-let selectOptionsArray = ["HUMAN"];
+let selectOptionsArray = ["Label"];
 handleImageUpload();
 selectInput.addEventListener("keyup", function (event) {
   if (event.keyCode === 13) {
