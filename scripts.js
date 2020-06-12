@@ -15,7 +15,7 @@ function handleImageUpload() {
 let selectInput = document.getElementById("select-option");
 
 let selectOptionsArray = ["HUMAN"];
-
+handleImageUpload();
 selectInput.addEventListener("keyup", function (event) {
   if (event.keyCode === 13) {
     event.preventDefault();

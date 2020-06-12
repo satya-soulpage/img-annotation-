@@ -19,10 +19,11 @@
       border: 1px solid #ddd;
       padding: 25px;
       margin: 40px auto 0 auto;
+      height: 94%;
     }
     body {
-      background: #f6f6f6;
-      font-family: 'PT Mono', monospace;
+      background: #dcd4d4;
+      font-family: halyard-text, sans-serif;
     }
     * {
       padding: 0;
@@ -43,29 +44,29 @@
 
 <body translate="no">
   <div class="container pt-3 pb-3">
-  <center><h1>SoulPage - Image Annotation Interface</h1></center>
+  <center><h1 class="header">SoulPage - Image Annotation Interface</h1></center>
     <div class="row pt-3">
       
       <div class="col-md-8">
-        <h1>Labelling</h1>
+        <!-- <h1>Labelling</h1> -->
         <div class="card" id="card"></div>
       </div>
 
-      <div class="col-md-4">
-        <h1>Settings</h1>
+      <div class="col-md-4 ">
+        <div class="settings"><h4>Settings</h4></div>
         <div class="form-group">
           <label>Enter Image URL</label>
-          <input type="text" id="image-url" class="form-control" />
+          <input type="text" id="image-url" class="form-control img-url" />
         </div>
         
         <div class="form-group">
-          <button class="btn btn-primary btn-sm" onclick="handleImageUpload()">Upload Image</button>
+          <button class="btn btn-primary btn-sm upload" onclick="handleImageUpload()">Upload </button>
         </div>
         
-        <div class="form-group">
+        <div class="form-group labels">
           <label>Enter Labels</label>
-          <div class="flex-container"></div>
           <input type="text" id="select-option" class="form-control" />
+          <div class="flex-container"></div>
         </div>
       </div>
 

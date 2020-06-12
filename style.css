@@ -37,3 +37,28 @@
 .flex-container .flex-item .icon:hover {
   background-color: #888;
 }
+.settings{
+  margin-top: 33px;
+  text-align: center;
+}
+
+.image-url{
+  width: 80%;
+}
+
+.upload{
+  margin-top: -96px;
+  margin-left: 81%;
+}
+
+.labels{
+  margin-top: -38px;
+}
+
+.header{
+  text-transform: uppercase;
+  color: #7b4c4c;
+}
+.img-url{
+  width: 80%;
+}
